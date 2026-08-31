@@ -1,19 +1,25 @@
-
 import { auth, googleProvider } from "./utils/firebase";
 import { signInWithPopup } from "firebase/auth";
 import api from "./utils/axios";
+import { useEffect } from "react";
+import getCurrentUser from "./features/getCurrentUser.js";
 
 function App() {
+  useEffect(() => {
+    const getUser = async () => {
+      await getCurrentUser();
+    };
+    getUser();
+  }, []);
 
   const handleLogin = async (token) => {
     try {
-      const {data} = await api.post("/auth/login", { token });
+      const { data } = await api.post("/api/auth/login", { token });
       console.log("Login successful:", data);
-    }catch (error) {
+    } catch (error) {
       console.error("Login failed:", error);
     }
   };
-
 
   const googleLogin = async () => {
     const data = await signInWithPopup(auth, googleProvider);
