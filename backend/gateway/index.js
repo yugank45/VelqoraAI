@@ -6,10 +6,11 @@ import cookieParser from "cookie-parser";
 import  protect  from "./middleware/auth.middleware.js";
 import { getCurrentUser } from "./controller/user.controller.js";
 
+dotenv.config();
 const PORT = process.env.PORT || 8000;
 const app = express();
 
-dotenv.config();
+
 app.use(cookieParser());
 app.use(cors(
   { origin: process.env.FRONTEND_URL , credentials: true }

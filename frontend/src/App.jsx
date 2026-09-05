@@ -3,11 +3,17 @@ import { signInWithPopup } from "firebase/auth";
 import api from "./utils/axios";
 import { useEffect } from "react";
 import getCurrentUser from "./features/getCurrentUser.js";
+import { useDispatch } from "react-redux";
+import { setUserData } from "./redux/userSlice.js";
+import Home from "./pages/Home.jsx";
 
 function App() {
+  const dispatch = useDispatch();
   useEffect(() => {
+    
     const getUser = async () => {
-      await getCurrentUser();
+      const data = await getCurrentUser();
+      dispatch(setUserData(data));
     };
     getUser();
   }, []);
@@ -30,14 +36,7 @@ function App() {
   };
 
   return (
-    <div className="w-full h-screen bg-black  flex items-center justify-center">
-      <button
-        className="bg-white text-black px-4 py-2 rounded-md "
-        onClick={googleLogin}
-      >
-        Login
-      </button>
-    </div>
+    <Home/>
   );
 }
 
